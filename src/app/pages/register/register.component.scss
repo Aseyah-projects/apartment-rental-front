@@ -1,0 +1,55 @@
+#register {
+  background-color: #f4f3ef;
+  min-height: 100vh;
+
+  padding: 50px 0 20px;
+  h2 {
+    color: #66615b;
+    font-size: 36px;
+    font-weight: 600;
+  }
+  p {
+    color: #66615b;
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  .register-container {
+    p {
+      margin-bottom: 70px;
+    }
+    .register-card {
+      position: relative;
+      .logo-circle {
+        position: absolute;
+        top: -42.5px;
+        left: calc(50% - 42.5px);
+        border-radius: 50%;
+        width: 85px;
+        height: 85px;
+        background-color: white;
+        padding: 5px;
+        img,
+        .logo-containter {
+          width: 75px;
+          height: 75px;
+          border-radius: 50%;
+        }
+      }
+      .register-form {
+        width: 90%;
+        margin: 40px auto 0;
+        .form-control {
+          background-color: white;
+          border: 1px solid rgba(103, 58, 183, 0.2);
+        }
+        button {
+          background-color: #1156fb;
+          color: white;
+          width: 120px;
+          margin: auto;
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+}

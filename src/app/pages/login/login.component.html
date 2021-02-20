@@ -1,0 +1,74 @@
+<section id="login" class="">
+  <div class="login-container m-auto">
+    <div class="container margin-auto">
+      <div class="row">
+        <div class="col-lg-6 col-md-10 m-auto">
+          <div class="text-center description">
+            <h2 class="">Login to your account</h2>
+            <p>
+              or <span><a [routerLink]="['/register']">Register</a></span
+              >, if you don't have one
+            </p>
+          </div>
+
+          <div class="m-auto d-flex justify-content-center login-card">
+            <div
+              class="logo-circle d-flex justify-content-center align-content-center"
+            >
+              <div class="logo-containter">
+                <img
+                  src="../../../assets/images/OM12M00.jpg"
+                  class="img-fluid"
+                />
+              </div>
+            </div>
+            <div class="login-form">
+              <form
+                class="d-flex flex-column"
+                (ngSubmit)="login(loginForm)"
+                #loginForm="ngForm"
+              >
+                <div class="form-group">
+                  <label>Email</label>
+                  <input
+                    class="form-control"
+                    placeholder="Email"
+                    [(ngModel)]="user.email"
+                    type="email"
+                    minlength="8"
+                    maxlength="32"
+                    name="email"
+                    required
+                    #email
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  <input
+                    class="form-control"
+                    placeholder="Password"
+                    [(ngModel)]="user.password"
+                    type="password"
+                    name="password"
+                    minlength="8"
+                    maxlength="32"
+                    required
+                    #password
+                  />
+                </div>
+                <button
+                  class="btn"
+                  type="submit"
+                  [disabled]="!loginForm.form.valid"
+                >
+                  Login
+                </button>
+              </form>
+            </div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
