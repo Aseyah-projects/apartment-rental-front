@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: '',
+  api: 'http://apartment-rental-backend.test',
 };
 
 /*

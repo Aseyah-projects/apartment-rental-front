@@ -12,7 +12,7 @@ export class RegisterComponent implements OnInit {
   user = {
     email: '',
     password: '',
-    rePassword: '',
+    password_confirmation: '',
     name: '',
   };
   constructor(private _UserService: UserService, protected router: Router) {}
