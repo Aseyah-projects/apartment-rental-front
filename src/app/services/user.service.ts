@@ -50,11 +50,7 @@ export class UserService {
     return this._HttpClient.get(`${environment.api}/api/me`);
   }
   public updateUser(user: any) {
-    return this._HttpClient.put(`${environment.api}/api/me`, {
-      name: user.name,
-      email: user.email,
-      current_password: user.password,
-    });
+    return this._HttpClient.put(`${environment.api}/api/me`, user);
   }
   public logout() {
     this._CookieService.delete('Token');

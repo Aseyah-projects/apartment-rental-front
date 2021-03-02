@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   Router,
-} from "@angular/router";
-import { Observable } from "rxjs";
-import { UserService } from "../services/user.service";
-import { CookieService } from "ngx-cookie-service";
+} from '@angular/router';
+import { Observable } from 'rxjs';
+import { UserService } from '../services/user.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -22,20 +22,10 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | boolean {
     let url: string = state.url;
-    const currentUser = this._UserService.currentUserObject;
-    return this.checkLogin(currentUser, url, route);
+    return this.checkLogin(url, route);
   }
-  checkLogin(
-    currentUser: any,
-    url: string = "/",
-    route: ActivatedRouteSnapshot
-  ): boolean {
-    if (this._CookieService.check("Token")) {
-      if (currentUser?.is_admin !== 1 && route.data.roles === "admin") {
-        this.router.navigate(["/"]);
-        return false;
-      }
-
+  checkLogin(url: string = '/', route: ActivatedRouteSnapshot): boolean {
+    if (this._CookieService.check('Token')) {
       // Store the attempted URL for redirecting
       this._UserService.redirectUrl = url;
 
@@ -44,7 +34,7 @@ export class AuthGuard implements CanActivate {
     }
 
     // Navigate to the login page with extras
-    this.router.navigate(["/login"]);
+    this.router.navigate(['/login']);
     return false;
   }
 }
