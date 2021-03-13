@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AddPropertyComponent } from './pages/add-property/add-property.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -24,6 +25,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     path: 'home',
     component: HomeComponent,
+  },
+  {
+    canActivate: [AuthGuard],
+    path: 'add-property',
+    component: AddPropertyComponent,
   },
   {
     path: '',

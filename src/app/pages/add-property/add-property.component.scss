@@ -1,0 +1,27 @@
+#addProperty {
+  padding: 3em 1.5em;
+  min-height: 100vh;
+  background-color: #e8e8e8;
+  .add-card {
+    max-width: 800px;
+    margin: auto;
+    padding: 1.5em;
+    margin: auto;
+    border-radius: 12px;
+    background-color: white;
+    h2 {
+      font-weight: 600;
+      color: var(--side-color);
+    }
+    .image-input {
+      height: auto;
+    }
+    .submit-btn {
+      max-width: 140px;
+      margin: auto;
+    }
+  }
+  .error-color {
+    margin-top: 4px;
+  }
+}

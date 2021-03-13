@@ -1,0 +1,114 @@
+<section id="addProperty">
+  <div class="card add-card">
+    <h2 class="mb-4">ADD NEW PROPERTY</h2>
+    <div class="form-container">
+      <form [formGroup]="propertyForm" (ngSubmit)="addProperty()">
+        <div class="row m-0">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>Title</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Title"
+                formControlName="title"
+              />
+
+              <div
+                class="error-color"
+                *ngIf="
+                  !propertyForm.get('title')?.valid &&
+                  propertyForm.get('title')?.touched
+                "
+              >
+                <p class="error-msg">
+                  Please enter a valid title with minimum length of 3 characters
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>Price</label>
+              <input
+                type="number"
+                class="form-control"
+                placeholder="Price"
+                formControlName="price"
+              />
+
+              <div
+                class="error-color"
+                *ngIf="
+                  !propertyForm.get('price')?.valid &&
+                  propertyForm.get('price')?.touched
+                "
+              >
+                <p class="error-msg">Price can not be less than zero</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label>Description</label>
+              <textarea
+                type="text"
+                class="form-control"
+                placeholder="Description"
+                formControlName="description"
+                style="resize: none"
+                rows="4"
+              ></textarea>
+
+              <div
+                class="error-color"
+                *ngIf="
+                  !propertyForm.get('description')?.valid &&
+                  propertyForm.get('description')?.touched
+                "
+              >
+                <p class="error-msg">
+                  Please enter a valid descripiton with minimum length of 5
+                  characters
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label>Images</label>
+              <input
+                type="file"
+                accept="image/*"
+                (change)="getImages($event)"
+                class="form-control image-input"
+                placeholder="images"
+                formControlName="images"
+                multiple
+              />
+
+              <div
+                class="error-color"
+                *ngIf="
+                  !propertyForm.get('price')?.valid &&
+                  propertyForm.get('price')?.touched
+                "
+              >
+                <p class="error-msg">Price can not be less than zero</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 mt-3">
+            <button
+              class="main-btn submit-btn w-100"
+              type="submit"
+              [disabled]="!propertyForm.valid"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
