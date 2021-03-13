@@ -86,16 +86,6 @@
                 formControlName="images"
                 multiple
               />
-
-              <div
-                class="error-color"
-                *ngIf="
-                  !propertyForm.get('price')?.valid &&
-                  propertyForm.get('price')?.touched
-                "
-              >
-                <p class="error-msg">Price can not be less than zero</p>
-              </div>
             </div>
           </div>
           <div class="col-lg-12 mt-3">
