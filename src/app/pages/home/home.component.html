@@ -1,1 +1,52 @@
-<p>home works!</p>
+<section id="home">
+  <div class="card main-card">
+    <h2 class="side-color">Properties</h2>
+    <div class="row m-0" *ngIf="properties">
+      <div
+        class="col-lg-4 col-md-6 my-3"
+        *ngFor="let property of properties?.data"
+      >
+        <div class="card property-card">
+          <div class="delete-btn" *ngIf="true">
+            <button (click)="deleteProperty(property)">
+              <div
+                class="d-flex justify-content-center align-items-center w-100 h-100"
+              >
+                <p class="m-0">&#10006;</p>
+              </div>
+            </button>
+          </div>
+          <div class="carousel-images">
+            <ngb-carousel
+              [interval]="0"
+              *ngIf="property?.images?.length > 0"
+              class="outline-none"
+            >
+              <ng-template ngbSlide *ngFor="let img of property?.images">
+                <div class="img-wrapper">
+                  <img *ngIf="img" [src]="img" class="img-fluid" />
+                </div>
+              </ng-template>
+            </ngb-carousel>
+          </div>
+          <div class="description d-flex flex-column align-items-start">
+            <h3>{{ property?.title | titlecase }}</h3>
+            <p>
+              {{
+                property?.description?.length > 200
+                  ? property?.description.slice(0, 200) + "..."
+                  : property?.description
+              }}
+            </p>
+            <div
+              class="d-flex justify-content-between align-items-end mt-auto w-100"
+            >
+              <span class="main-color font-weight-bold">Price</span>
+              <span>{{ property?.price || 0 | number: "1.2-2" }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

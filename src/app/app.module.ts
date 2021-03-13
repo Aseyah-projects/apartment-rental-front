@@ -15,6 +15,9 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { NavbarComponent } from './shared/navbar/navbar.component';
+import { AddPropertyComponent } from './pages/add-property/add-property.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,8 @@ import { ToastrModule } from 'ngx-toastr';
     RegisterComponent,
     HomeComponent,
     ProfileComponent,
+    NavbarComponent,
+    AddPropertyComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +35,7 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
     HttpClientModule,
     ToastrModule.forRoot(),
   ],

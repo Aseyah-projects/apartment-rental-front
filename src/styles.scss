@@ -4,12 +4,20 @@
 
 :root {
   --main-color: #3f51b5;
+  --side-color: #525252;
+  --error-color: #fd4343;
 }
 * {
   font-family: Poppins;
 }
 .main-color {
   color: var(--main-color);
+}
+.side-color {
+  color: var(--side-color);
+}
+.error-color {
+  color: var(--error-color);
 }
 .main-btn {
   background-color: var(--main-color);
