@@ -11,12 +11,32 @@ import { Router } from '@angular/router';
 })
 export class UserService {
   redirectUrl = '/';
-
+  userSubject = new BehaviorSubject<any>(null);
+  get activeUser() {
+    return this.userSubject.value;
+  }
+  set activeUser(user: any) {
+    !user
+      ? localStorage.removeItem('user')
+      : localStorage.setItem('user', JSON.stringify(user));
+    this.userSubject.next(user);
+  }
   constructor(
     private _HttpClient: HttpClient,
     private _CookieService: CookieService,
     private router: Router
-  ) {}
+  ) {
+    this.getSavedUser();
+  }
+  getSavedUser() {
+    let currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+
+    if (!this._CookieService.check('Token') || !currentUser) {
+      this.logout();
+    } else {
+      this.activeUser = currentUser;
+    }
+  }
   public login(user: any): Observable<any> {
     return this._HttpClient
       .post(`${environment.api}/api/login`, user, { responseType: 'json' })
@@ -24,8 +44,8 @@ export class UserService {
         map((response: any) => {
           if (response) {
             this._CookieService.set('Token', response['token']);
-
             this.router.navigate([this.redirectUrl]);
+            this.getMe().subscribe((res) => {});
           }
         })
       );
@@ -47,13 +67,21 @@ export class UserService {
     });
   }
   public getMe() {
-    return this._HttpClient.get(`${environment.api}/api/me`);
+    return this._HttpClient.get(`${environment.api}/api/me`).pipe(
+      map((response) => {
+        if (response) {
+          this.activeUser = response;
+        }
+        return response;
+      })
+    );
   }
   public updateUser(user: any) {
     return this._HttpClient.put(`${environment.api}/api/me`, user);
   }
   public logout() {
     this._CookieService.delete('Token');
-    this.router.navigate(['/register']);
+    this.activeUser = null;
+    this.router.navigate(['/login']);
   }
 }

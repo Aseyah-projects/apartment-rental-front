@@ -1,0 +1,23 @@
+.navbar {
+  padding: 12px 20px;
+  background-color: var(--main-color);
+}
+.navbar-brand {
+  font-size: 25px;
+  font-weight: 800;
+  img {
+    height: 40px;
+    width: 40px;
+  }
+}
+li {
+  a {
+    font-weight: 500;
+    color: #66615b;
+  }
+}
+.profile {
+  i {
+    color: white;
+  }
+}
