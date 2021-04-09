@@ -25,4 +25,10 @@ export class PropertyService {
   deleteProperty(id: string) {
     return this.httpClient.delete(`${environment.api}/api/apartment/${id}`);
   }
+  addPropertyImage(images: any, id: string) {
+    return this.httpClient.post(
+      `${environment.api}/api/apartment/${id}/image`,
+      images
+    );
+  }
 }

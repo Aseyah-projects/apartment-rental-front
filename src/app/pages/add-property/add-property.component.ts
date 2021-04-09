@@ -16,9 +16,9 @@ export class AddPropertyComponent implements OnInit {
       Validators.minLength(5),
     ]),
     price: new FormControl(0, [Validators.required, Validators.min(0)]),
-    images: new FormControl(null),
+    images: new FormControl([]),
   });
-  imagesSelected: any[] = [];
+  imagesSelected: any = {};
 
   constructor(
     private propertyService: PropertyService,
@@ -27,29 +27,42 @@ export class AddPropertyComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  getImages(event: Event) {
-    let imagesList = (<HTMLInputElement>event?.target)?.files;
-    let imagesCount: number = imagesList?.length ?? [].length;
-    if (imagesCount > 0) {
-      for (let i = 0; i < imagesCount; i++) {
-        this.readImage((<FileList>imagesList)[i]);
-      }
-    }
-  }
-  readImage(image: Blob) {
-    const reader = new FileReader();
-    reader.readAsDataURL(image);
-    reader.onload = () => {
-      this.imagesSelected.push(reader.result);
-    };
+  selectFiles(event: any) {
+    const files = event.target.files;
+    this.imagesSelected = files;
   }
   addProperty() {
-    let newPropery = Object.assign({}, this.propertyForm.value);
-    newPropery.images = this.imagesSelected;
-    this.propertyService.addProperty(newPropery).subscribe(
-      (res) => {
+    let body = Object.assign({}, this.propertyForm.value);
+    const formData = new FormData();
+    for (let i = 0; i < this.imagesSelected?.length; i++)
+      formData.append(`images[${i}]`, this.imagesSelected[i]);
+
+    let uploadingToastr = this.customToastrService.showToast(
+      'Deleting Image...',
+      'Please Wait',
+      {
+        disableTimeOut: true,
+      }
+    );
+    this.propertyService.addProperty(body).subscribe(
+      (res: any) => {
         this.customToastrService.showToast('Property Added.', 'Added');
+        this.propertyService.addPropertyImage(formData, res.id).subscribe(
+          (res) => {
+            this.customToastrService.toastr.clear(uploadingToastr.toastId);
+            this.customToastrService.showToast('Image(s) Uploaded', 'Success');
+          },
+          (err) => {
+            this.customToastrService.toastr.clear(uploadingToastr.toastId);
+
+            this.customToastrService.showErrorToast(
+              'Fail in Image(s) Upload.',
+              'Failed'
+            );
+          }
+        );
         this.propertyForm.reset();
+        this.imagesSelected = [];
       },
       (err) => {
         this.customToastrService.showToast(`Couldn't Add Property.`, 'Failed');
