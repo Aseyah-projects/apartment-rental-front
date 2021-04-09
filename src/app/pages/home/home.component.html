@@ -39,14 +39,14 @@
             <div class="rating my-2">
               <i
                 class="fas fa-star"
-                *ngFor="let i of [].constructor(property?.feedbacks_avg || 0)"
+                *ngFor="let i of [].constructor(+property?.feedbacks_avg || 0)"
               ></i>
-              <span *ngIf="!property?.feedbacks_avg">
-                <i
-                  class="fas fa-star empty-star"
-                  *ngFor="let i of [].constructor(5)"
-                ></i>
-              </span>
+              <i
+                class="fas fa-star empty-star"
+                *ngFor="
+                  let i of [].constructor(5 - (+property?.feedbacks_avg || 0))
+                "
+              ></i>
 
               <span class="count">({{ property?.feedbacks_count || 0 }})</span>
             </div>
