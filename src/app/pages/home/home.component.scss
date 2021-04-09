@@ -39,6 +39,24 @@
         border-top-right-radius: 12px;
         border-top-left-radius: 12px;
       }
+      .title {
+        cursor: pointer;
+      }
+      .rating {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        i {
+          color: #ffa500;
+          margin-right: 3px;
+        }
+        .empty-star {
+          color: #e8e8e8;
+        }
+        .count {
+          color: #b3b3b3;
+        }
+      }
       .description {
         padding: 1em 1.2em;
         height: 100%;

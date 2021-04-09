@@ -18,6 +18,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { AddPropertyComponent } from './pages/add-property/add-property.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PropertyDetailsComponent } from './pages/property-details/property-details.component';
+import { UserBidComponent } from './pages/user-bid/user-bid.component';
+import { ReceivedBidComponent } from './pages/received-bid/received-bid.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ProfileComponent,
     NavbarComponent,
     AddPropertyComponent,
+    PropertyDetailsComponent,
+    UserBidComponent,
+    ReceivedBidComponent,
   ],
   imports: [
     BrowserModule,

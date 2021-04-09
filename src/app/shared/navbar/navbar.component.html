@@ -22,6 +22,22 @@
           >Home <span class="sr-only">(current)</span></a
         >
       </li>
+      <li class="">
+        <a
+          class="nav-link nav-item"
+          [routerLink]="['bids']"
+          routerLinkActive="active"
+          >Bids <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="">
+        <a
+          class="nav-link nav-item"
+          [routerLink]="['received-bids']"
+          routerLinkActive="active"
+          >Received Bids <span class="sr-only">(current)</span></a
+        >
+      </li>
     </ul>
     <ul class="navbar-nav profile">
       <li class="nav-item" *ngIf="!activeUser">

@@ -1,0 +1,99 @@
+<section id="transactions">
+  <div class="card main-card">
+    <div class="card-header bg-white py-3">
+      <h5 class="m-0 font-weight-bold title">My Bids</h5>
+    </div>
+    <div class="row mx-0">
+      <div class="col-lg-4 py-1 border-right mb-3">
+        <div class="properties mt-4">
+          <div
+            class="property"
+            *ngFor="let bid of bids$ | async; let j = index"
+            [ngClass]="{ active: (bidSelectedSubject$ | async) == j }"
+            (click)="changeBidSelection(j)"
+          >
+            <div class="img-container">
+              <img
+                [src]="bid?.apartment?.images[0]"
+                *ngIf="
+                  bid?.apartment?.images && bid.apartment.images.length > 0
+                "
+              />
+              <div
+                class="w-100 h-100 bg-white rounded"
+                *ngIf="
+                  !bid?.apartment?.images || bid.apartment.images.length == 0
+                "
+              ></div>
+            </div>
+            <div
+              class="d-flex justify-content-between align-items-center w-100"
+            >
+              <h5>{{ bid?.apartment.title }}</h5>
+              <h5>{{ bid?.user_bid }}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 mt-1">
+        <div
+          class="transaction mt-4"
+          *ngIf="selectedBid$ | async as selectedBid"
+        >
+          <h5 class="transaction-title mb-4">Bid Details</h5>
+          <div class="text-center details">
+            <div class="d-flex justify-content-between align-items-center">
+              <p class="mr-2">Date</p>
+              <p>{{ selectedBid?.created_at | date: "d MMM y" }}</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <p class="mr-2">My Bid</p>
+              <p>{{ selectedBid?.user_bid || 0 | currency }}</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <p class="mr-2">My Message</p>
+              <p>{{ selectedBid?.user_message || "none" }}</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <p class="mr-2">Provider Bid</p>
+              <p>{{ selectedBid?.provider_bid || 0 | currency }}</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <p class="mr-2">Provider Message</p>
+              <p>{{ selectedBid?.provider_message || "none" }}</p>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <p class="mr-2">Status</p>
+              <p>{{ selectedBid?.status }}</p>
+            </div>
+            <div
+              class="d-flex justify-content-center align-items-center"
+              *ngIf="selectedBid?.status == 'negotiate'"
+            >
+              <button
+                class="main-btn text-white mx-1"
+                (click)="acceptBid(selectedBid)"
+                *ngIf="!selectedBid?.accepted_by_user"
+              >
+                Accept
+              </button>
+              <button
+                class="main-btn text-white bg-dark mx-1"
+                (click)="updateBid(selectedBid)"
+              >
+                Update Bid
+              </button>
+              <button
+                class="main-btn text-white bg-danger mx-1"
+                (click)="cancelBid(selectedBid)"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

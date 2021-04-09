@@ -1,0 +1,126 @@
+<section id="transactions">
+  <div class="card main-card">
+    <div class="card-header bg-white py-3">
+      <h5 class="m-0 font-weight-bold title">Received Bids</h5>
+    </div>
+    <div class="row mx-0">
+      <div class="col-lg-4 py-1 border-right mb-3">
+        <div class="properties mt-4">
+          <div
+            class="property"
+            *ngFor="let bid of bids$ | async; let j = index"
+            [ngClass]="{ active: (bidSelectedSubject$ | async) == j }"
+            (click)="changeBidSelection(j)"
+          >
+            <div class="img-container">
+              <img
+                [src]="bid?.images[0]"
+                *ngIf="bid?.images && bid.images.length > 0"
+              />
+              <div
+                class="w-100 h-100 bg-white rounded"
+                *ngIf="!bid?.images || bid.images.length == 0"
+              ></div>
+            </div>
+            <div
+              class="d-flex justify-content-between align-items-center w-100"
+            >
+              <h5>{{ bid?.title }}</h5>
+              <h5>{{ bid?.rents.user_bid }}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 mt-1">
+        <div
+          class="transaction mt-4"
+          *ngIf="selectedBid$ | async as selectedBid"
+        >
+          <div *ngIf="selectedBid?.rents?.length > 0; else noBids">
+            <h5 class="transaction-title mb-4">Bids</h5>
+            <div class="table-responsive text-center">
+              <table class="table">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">User Bid</th>
+                      <th scope="col">My Bid</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">User Message</th>
+                      <th scope="col">Date</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let hire of selectedBid.rents">
+                      <td>{{ hire?.user_bid || 0 | currency }}</td>
+                      <td>{{ hire?.provider_bid || 0 | currency }}</td>
+                      <td>{{ hire?.status }}</td>
+                      <td>
+                        <div
+                          placement="top"
+                          [ngbTooltip]="
+                            hire?.user_message?.length > 30
+                              ? hire?.user_message
+                              : ''
+                          "
+                          data-container="body"
+                        >
+                          {{
+                            hire?.user_message?.length > 30
+                              ? hire?.user_message?.slice(0, 30) + "..."
+                              : hire?.user_message
+                          }}
+                        </div>
+                      </td>
+                      <td>
+                        {{ selectedBid?.created_at | date: "d MMM y" }}
+                      </td>
+                      <td>
+                        <button
+                          class="main-btn text-white"
+                          (click)="acceptBid(hire)"
+                          *ngIf="
+                            !hire?.accepted_by_provider &&
+                            hire.status == 'negotiate'
+                          "
+                        >
+                          Accept
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          class="main-btn text-white bg-dark"
+                          (click)="updateBid(hire)"
+                          *ngIf="hire.status == 'negotiate'"
+                        >
+                          Bid
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          class="main-btn text-white bg-danger"
+                          (click)="cancelBid(hire)"
+                          *ngIf="hire.status == 'negotiate'"
+                        >
+                          Cancel
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </table>
+            </div>
+          </div>
+          <ng-template #noBids>
+            <div class="d-flex justify-content-center align-items-center">
+              No Bids
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

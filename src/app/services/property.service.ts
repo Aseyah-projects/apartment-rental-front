@@ -10,6 +10,9 @@ export class PropertyService {
   getProperties() {
     return this.httpClient.post(`${environment.api}/api/apartment/index`, {});
   }
+  getProperty(id: string | number) {
+    return this.httpClient.get(`${environment.api}/api/apartment/${id}`);
+  }
   updateProperty(id: string, property: any) {
     return this.httpClient.put(
       `${environment.api}/api/apartment/${id}`,

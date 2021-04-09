@@ -1,0 +1,100 @@
+#transactions {
+  padding: 2em;
+  .main-card {
+    border-radius: 10px;
+    overflow: hidden;
+    padding-bottom: 20px;
+  }
+  * {
+    color: var(--main-color);
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    background: #e0e0e0;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--side-color);
+  }
+  .properties,
+  .transaction tbody {
+    height: 430px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .transaction {
+    .details {
+      p {
+        font-weight: bolder;
+        margin-bottom: 1em;
+      }
+    }
+  }
+  .properties {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 5px;
+    .property {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      background-color: #f5f6fa;
+      margin: 0 0 0.6em;
+      border-radius: 10px;
+      padding: 1em;
+      cursor: pointer;
+      overflow: hidden;
+
+      .img-container,
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        margin-right: 0.8em;
+      }
+
+      h5 {
+        margin-bottom: 0;
+        font-weight: bold;
+        font-size: 1.2em;
+      }
+    }
+    .property.active {
+      background-color: var(--side-color);
+      * {
+        color: white;
+      }
+      img {
+        border: 2px solid white;
+      }
+    }
+  }
+  .transaction {
+    .transaction-title {
+      font-weight: bolder;
+      color: var(--main-color);
+    }
+    .detail {
+      margin: 0.7em 0;
+      padding: 0 10px;
+      p {
+        margin: 0;
+        font-weight: bolder;
+      }
+    }
+  }
+}
+tbody {
+  display: block;
+  height: 310px;
+  overflow: auto;
+}
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* even columns width , fix width of table too*/
+}
+td,
+th {
+  vertical-align: middle;
+}

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CustomToastrService } from 'src/app/services/CustomToastr.service';
 import { PropertyService } from 'src/app/services/property.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +11,19 @@ import { PropertyService } from 'src/app/services/property.service';
 })
 export class HomeComponent implements OnInit {
   properties: any = null;
+  user: any = null;
   constructor(
     private propertyService: PropertyService,
-    private customToastrService: CustomToastrService
+    private userService: UserService,
+    private customToastrService: CustomToastrService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getProperties();
+    this.userService.userSubject.subscribe((user) => {
+      this.user = user;
+    });
   }
   getProperties() {
     this.propertyService.getProperties().subscribe((res) => {
@@ -36,5 +44,8 @@ export class HomeComponent implements OnInit {
           );
         }
       );
+  }
+  openProperty(property: any) {
+    this.router.navigate(['/properties', property.id]);
   }
 }
