@@ -7,8 +7,16 @@ import { environment } from 'src/environments/environment';
 })
 export class PropertyService {
   constructor(private httpClient: HttpClient) {}
-  getProperties() {
-    return this.httpClient.post(`${environment.api}/api/apartment/index`, {});
+  getProperties(page: string = '1') {
+    return this.httpClient.post(
+      `${environment.api}/api/apartment/index`,
+      {},
+      {
+        params: {
+          page,
+        },
+      }
+    );
   }
   getProperty(id: string | number) {
     return this.httpClient.get(`${environment.api}/api/apartment/${id}`);

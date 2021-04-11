@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { map, mergeMap, shareReplay } from 'rxjs/operators';
 import { CustomToastrService } from 'src/app/services/CustomToastr.service';
+import { FeedbackService } from 'src/app/services/feedback.service';
 import { UserBidService } from 'src/app/services/user-bid.service';
 import Swal from 'sweetalert2';
 @Component({
@@ -10,8 +11,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./user-bid.component.scss'],
 })
 export class UserBidComponent implements OnInit {
-  bidSelectedSubject$ = new Subject<number>();
+  bidSelectedSubject$ = new BehaviorSubject<number>(-1);
   refreshBidsSubject = new BehaviorSubject<boolean>(false);
+  ratingSubject = new BehaviorSubject<number>(-1);
   bidsData$: Observable<any> = this.userBidService.getBids().pipe(
     map((p) => {
       this.changeBidSelection(-1);
@@ -25,12 +27,14 @@ export class UserBidComponent implements OnInit {
 
   selectedBid$ = combineLatest([this.bids$, this.bidSelectedSubject$]).pipe(
     map(([bids, selectedIndex]) => {
+      bids[selectedIndex] ? this.removeStyle(bids[selectedIndex]) : null;
       return bids[selectedIndex];
     })
   );
 
   constructor(
     private userBidService: UserBidService,
+    private feedbackService: FeedbackService,
     private customToastrService: CustomToastrService
   ) {}
 
@@ -105,5 +109,41 @@ export class UserBidComponent implements OnInit {
         this.customToastrService.showErrorToast("Couldn't Add Bid", 'Failed');
       }
     );
+  }
+
+  changeStyle(order: number) {
+    this.ratingSubject.next(order);
+  }
+  removeStyle(bid: any) {
+    this.ratingSubject.next(+(bid?.feedback || -1));
+  }
+  giveRating(order: number) {
+    Swal.fire({
+      title: `Are you sure you want to give ${order} star(s)?`,
+      showCancelButton: true,
+      confirmButtonText: `Yes`,
+      confirmButtonColor: '#3f51b5',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let sub = this.selectedBid$.subscribe((bid: any) => {
+          this.feedbackService.rate(order, bid?.apartment_id).subscribe(
+            (res) => {
+              this.customToastrService.showToast(
+                'Thanks for your feedback',
+                'Success'
+              );
+              this.refreshBidsSubject.next(true);
+            },
+            (err) => {
+              this.customToastrService.showErrorToast(
+                'Feedback not sent.',
+                'Fail'
+              );
+            }
+          );
+        });
+        sub.unsubscribe();
+      }
+    });
   }
 }

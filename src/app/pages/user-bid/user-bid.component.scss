@@ -15,9 +15,8 @@
   ::-webkit-scrollbar-thumb {
     background: var(--side-color);
   }
-  .properties,
-  .transaction tbody {
-    height: 430px;
+  .properties {
+    height: 400px;
     overflow-y: scroll;
     overflow-x: hidden;
   }
@@ -80,5 +79,12 @@
         font-weight: bolder;
       }
     }
+  }
+  .feedback i {
+    color: #e8e8e8;
+    cursor: pointer;
+  }
+  i.fa-star.gold {
+    color: #ffa500;
   }
 }

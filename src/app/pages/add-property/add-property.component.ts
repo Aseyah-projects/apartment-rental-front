@@ -38,7 +38,7 @@ export class AddPropertyComponent implements OnInit {
       formData.append(`images[${i}]`, this.imagesSelected[i]);
 
     let uploadingToastr = this.customToastrService.showToast(
-      'Deleting Image...',
+      'Uploading Image...',
       'Please Wait',
       {
         disableTimeOut: true,
@@ -47,20 +47,25 @@ export class AddPropertyComponent implements OnInit {
     this.propertyService.addProperty(body).subscribe(
       (res: any) => {
         this.customToastrService.showToast('Property Added.', 'Added');
-        this.propertyService.addPropertyImage(formData, res.id).subscribe(
-          (res) => {
-            this.customToastrService.toastr.clear(uploadingToastr.toastId);
-            this.customToastrService.showToast('Image(s) Uploaded', 'Success');
-          },
-          (err) => {
-            this.customToastrService.toastr.clear(uploadingToastr.toastId);
+        this.imagesSelected.length > 0
+          ? this.propertyService.addPropertyImage(formData, res.id).subscribe(
+              (res) => {
+                this.customToastrService.toastr.clear(uploadingToastr.toastId);
+                this.customToastrService.showToast(
+                  'Image(s) Uploaded',
+                  'Success'
+                );
+              },
+              (err) => {
+                this.customToastrService.toastr.clear(uploadingToastr.toastId);
 
-            this.customToastrService.showErrorToast(
-              'Fail in Image(s) Upload.',
-              'Failed'
-            );
-          }
-        );
+                this.customToastrService.showErrorToast(
+                  'Fail in Image(s) Upload.',
+                  'Failed'
+                );
+              }
+            )
+          : null;
         this.propertyForm.reset();
         this.imagesSelected = [];
       },

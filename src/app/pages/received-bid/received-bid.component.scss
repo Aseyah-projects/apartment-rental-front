@@ -15,9 +15,8 @@
   ::-webkit-scrollbar-thumb {
     background: var(--side-color);
   }
-  .properties,
-  .transaction tbody {
-    height: 430px;
+  .properties {
+    height: 400px;
     overflow-y: scroll;
     overflow-x: hidden;
   }

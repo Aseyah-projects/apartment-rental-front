@@ -26,7 +26,7 @@
               class="d-flex justify-content-between align-items-center w-100"
             >
               <h5>{{ bid?.title }}</h5>
-              <h5>{{ bid?.rents.user_bid }}</h5>
+              <h5>Bids: {{ bid?.rents?.length || 0 }}</h5>
             </div>
           </div>
         </div>

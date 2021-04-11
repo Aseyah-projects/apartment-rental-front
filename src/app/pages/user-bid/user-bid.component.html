@@ -91,6 +91,24 @@
                 Cancel
               </button>
             </div>
+            <div
+              class="feedback mt-3"
+              *ngIf="selectedBid?.status != 'negotiate'"
+            >
+              <h4>Give us your feedback</h4>
+              <span *ngIf="{ value: (ratingSubject | async) || 0 } as rating">
+                <i
+                  class="fas fa-star"
+                  *ngFor="let item of [].constructor(5); let i = index"
+                  (mouseover)="changeStyle(i + 1)"
+                  (mouseout)="removeStyle(selectedBid)"
+                  (click)="giveRating(i + 1)"
+                  [ngClass]="{
+                    gold: rating.value > i
+                  }"
+                ></i>
+              </span>
+            </div>
           </div>
         </div>
       </div>

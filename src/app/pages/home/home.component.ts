@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CustomToastrService } from 'src/app/services/CustomToastr.service';
 import { PropertyService } from 'src/app/services/property.service';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -25,25 +26,36 @@ export class HomeComponent implements OnInit {
       this.user = user;
     });
   }
-  getProperties() {
-    this.propertyService.getProperties().subscribe((res) => {
+  getProperties(page: string = '1') {
+    this.propertyService.getProperties(page).subscribe((res) => {
       this.properties = res;
     });
   }
+  pageChanged(page: number) {
+    this.getProperties(page.toString());
+  }
   deleteProperty(property: any) {
-    if (confirm(`Are you sure you want to delete ${property?.title} property?`))
-      this.propertyService.deleteProperty(property.id).subscribe(
-        (res) => {
-          this.customToastrService.showToast('Property Deleted', 'Deleted');
-          this.getProperties();
-        },
-        (err) => {
-          this.customToastrService.showErrorToast(
-            "Couldn't Delete Property",
-            'Failed'
-          );
-        }
-      );
+    Swal.fire({
+      title: `Are you sure you want to delete ${property?.title} property?`,
+      showCancelButton: true,
+      confirmButtonText: `Delete`,
+      confirmButtonColor: '#FF1A5F',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.propertyService.deleteProperty(property.id).subscribe(
+          (res) => {
+            this.customToastrService.showToast('Property Deleted', 'Deleted');
+            this.getProperties();
+          },
+          (err) => {
+            this.customToastrService.showErrorToast(
+              "Couldn't Delete Property",
+              'Failed'
+            );
+          }
+        );
+      }
+    });
   }
   openProperty(property: any) {
     this.router.navigate(['/properties', property.id]);

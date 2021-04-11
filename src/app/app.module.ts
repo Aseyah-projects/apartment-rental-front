@@ -21,6 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PropertyDetailsComponent } from './pages/property-details/property-details.component';
 import { UserBidComponent } from './pages/user-bid/user-bid.component';
 import { ReceivedBidComponent } from './pages/received-bid/received-bid.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ReceivedBidComponent } from './pages/received-bid/received-bid.componen
     NgbModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    NgxPaginationModule,
   ],
   providers: [
     UserService,
