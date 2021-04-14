@@ -27,6 +27,12 @@ export class UserBidService {
       {}
     );
   }
+  pay(id: string) {
+    return this.httpClient.post(
+      `${environment.api}/api/rent/user/pay/${id}`,
+      {}
+    );
+  }
   cancelBid(id: string) {
     return this.httpClient.post(
       `${environment.api}/api/rent/user/cancel/${id}`,

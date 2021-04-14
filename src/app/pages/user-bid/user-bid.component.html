@@ -68,6 +68,37 @@
               <p>{{ selectedBid?.status }}</p>
             </div>
             <div
+              class="d-flex jus align-items-center justify-content-center"
+              *ngIf="
+                selectedBid?.accepted_by_user &&
+                selectedBid?.accepted_by_user &&
+                selectedBid.status == 'accepted'
+              "
+            >
+              <button
+                class="main-btn text-white mx-1"
+                *ngIf="!selectedBid?.paid"
+                (click)="openPayModal()"
+              >
+                Complete Payment
+              </button>
+            </div>
+            <div *ngIf="isPaying">
+              <form id="payment-form" class="my-5">
+                <div id="card-element">
+                  <!--Stripe.js injects the Card Element-->
+                </div>
+                <button
+                  class="my-3 btn main-btn text-white"
+                  id="submit"
+                  type="button"
+                  (click)="pay()"
+                >
+                  <span id="button-text" class="text-white">Pay</span>
+                </button>
+              </form>
+            </div>
+            <div
               class="d-flex justify-content-center align-items-center"
               *ngIf="selectedBid?.status == 'negotiate'"
             >
